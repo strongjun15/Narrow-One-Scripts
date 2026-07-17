@@ -6,11 +6,12 @@ To run these scripts, Tampermonkey (Google Chrome extension) is needed :
 * or [youtube vedio made by 【/ℕ𝕏/】 𝕶𝖛𝖊𝖝](https://www.youtube.com/watch?v=Cq7HAGtWuQ0)
 
 ## 💬 Chat Mod with Translation
+
+![Chat Mod with Translation](chat_translator.png)
+
 Real-time translation and adaptive text color features considering the background to enhance your gameplay experience.
 
 Deepest gratitude and honor to [Wolfart](https://github.com/N1-wolfart)..! I developed this by adding some features on original transparent chat UI mod created by [N1CNmod](https://github.com/N1CNmod/narrowone-mod).
-
-![Chat Mod with Translation](chat_translator.png)
 
 ### Features
 
