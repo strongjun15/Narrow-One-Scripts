@@ -1,13 +1,11 @@
 # Scripts for Narrow One !
 > This repository contains JS scripts developed by Lumos ✌️ to make playing Narrow One more fun and convenient.
 
-To run these scripts, Tampermonkey (Google Chrome extension) is needed. 
-
-If you do not know how to use it,
+To run these scripts, Tampermonkey (Google Chrome extension) is needed :
 * have a look at this guidline by N1CN : https://github.com/N1CNmod/narrowone-mod#how-to-run-the-scripts-step-by-step-guide
-* or youtube vedio made by 【/ℕ𝕏/】 𝕶𝖛𝖊𝖝 : 
+* or youtube vedio made by 【/ℕ𝕏/】 𝕶𝖛𝖊𝖝 : https://www.youtube.com/watch?v=Cq7HAGtWuQ0
 
-## ✨ Chat Mod with Translation✨
+## ✨ Chat Mod with Translation ✨
 Real-time translation and adaptive text color features to enhance your gameplay experience !
 
 ### 🙏 Deepest gratitude and honor to Wolfart..!
@@ -22,10 +20,6 @@ I actually developed this by adding some features on original transparent chat U
   * **Outgoing Chat:** Translate what you are typing into your friend's language instantly before sending.
 * **Auto-Translation:** Automatically translates new incoming chat messages as they appear on the screen. (This can be toggled on/off in the settings).
 * **No API Key Required:** Uses a lightweight Google Translate backend that works out of the box.
-
-### 🚀 Installation
-
-Please follow
 
 ### ⌨️ How to Use (Keybinds)
 
