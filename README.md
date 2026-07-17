@@ -43,7 +43,7 @@ Press `_` in-game to access the configuration panel:
 * **Adaptive text color:** Toggle the real-time contrast-aware text color engine.
 * **Auto-translate new messages:** When enabled, any new message popping up in the chat log will be automatically translated to your language. (Disabled by default).
 
-### Licensing
+### 📄 Additional Licensing
 
 This script is based on the work of N1CNmod.
 
@@ -56,3 +56,5 @@ override, or relicense any portion of the original author's work.
 
 If you reuse this repository, please preserve both the original attribution and
 the attribution for my modifications.
+
+## Adaptive Center Dot
