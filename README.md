@@ -2,14 +2,14 @@
 > This repository contains JS scripts developed by Lumos ✌️ to make playing Narrow One more fun and convenient.
 
 To run these scripts, Tampermonkey (Google Chrome extension) is needed :
-* have a look at this guidline by N1CN : https://github.com/N1CNmod/narrowone-mod#how-to-run-the-scripts-step-by-step-guide
-* or youtube vedio made by 【/ℕ𝕏/】 𝕶𝖛𝖊𝖝 : https://www.youtube.com/watch?v=Cq7HAGtWuQ0
+* have a look at this [guidline by N1CN](https://github.com/N1CNmod/narrowone-mod#how-to-run-the-scripts-step-by-step-guide)
+* or [youtube vedio made by 【/ℕ𝕏/】 𝕶𝖛𝖊𝖝](https://www.youtube.com/watch?v=Cq7HAGtWuQ0)
 
 ## ✨ Chat Mod with Translation ✨
 Real-time translation and adaptive text color features to enhance your gameplay experience !
 
 ### 🙏 Deepest gratitude and honor to Wolfart..!
-I actually developed this by adding some features on original transparent chat UI mod created by N1CNmod.
+I actually developed this by adding some features on original transparent chat UI mod created by [N1CNmod](https://github.com/N1CNmod/narrowone-mod).
 
 ### ✏️ Features
 
