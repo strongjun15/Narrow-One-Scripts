@@ -57,4 +57,6 @@ override, or relicense any portion of the original author's work.
 If you reuse this repository, please preserve both the original attribution and
 the attribution for my modifications.
 
-## Adaptive Center Dot
+## ✨ Adaptive Center Dot ✨
+
+
