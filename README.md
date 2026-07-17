@@ -14,7 +14,7 @@ Deepest gratitude and honor to [Wolfart](https://github.com/N1-wolfart)..! I dev
 
 ### Features
 
-* **Transparent Chat UI (Original):** Replaces the bulky default chat box with a clean, transparent, and non-intrusive interface.
+* Transparent Chat UI (Original): Replaces the bulky default chat box with a clean, transparent, and non-intrusive interface.
 * **Adaptive Text Color:** The script reads the game background in real-time and automatically adjusts the chat text color (switching between dark and light modes with a subtle glow) to ensure maximum readability against any environment.
 * **Two-Way Translation:** 
   * **Incoming Chat:** Translate messages from other players into your native language.
@@ -24,10 +24,8 @@ Deepest gratitude and honor to [Wolfart](https://github.com/N1-wolfart)..! I dev
 
 ### How to Use (Keybinds)
 
-The script operates primarily through three simple hotkeys:
-
-* **`_` (Shift + `-`) - Open Settings Menu**
-  Press this to open the **✨ Chat Translator ✨** panel. You can drag the panel around by clicking its header. Close it by pressing `_` again.
+* **`_` (Shift + `-`) - Open and Close Settings Menu**
+  Press this to open the **✨ Chat Translator ✨** panel. Close it by pressing `_` again.
   
 * **`-` (Minus) - Translate Chat Log**
   Press this outside of the chat input box to instantly translate all currently visible chat messages into your language. Press it again to revert the text back to the original messages.
