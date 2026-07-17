@@ -11,7 +11,7 @@ Real-time translation and adaptive text color features considering the backgroun
 Deepest gratitude and honor to Wolfart..!
 I actually developed this by adding some features on original transparent chat UI mod created by [N1CNmod](https://github.com/N1CNmod/narrowone-mod).
 
-### ✏️ Features
+### Features
 
 * **Transparent Chat UI (Original):** Replaces the bulky default chat box with a clean, transparent, and non-intrusive interface.
 * **Adaptive Text Color:** The script reads the game background in real-time and automatically adjusts the chat text color (switching between dark and light modes with a subtle glow) to ensure maximum readability against any environment.
@@ -21,7 +21,7 @@ I actually developed this by adding some features on original transparent chat U
 * **Auto-Translation:** Automatically translates new incoming chat messages as they appear on the screen. (This can be toggled on/off in the settings).
 * **No API Key Required:** Uses a lightweight Google Translate backend that works out of the box.
 
-### ⌨️ How to Use (Keybinds)
+### How to Use (Keybinds)
 
 The script operates primarily through three simple hotkeys:
 
@@ -34,7 +34,7 @@ The script operates primarily through three simple hotkeys:
 * **`=` (Equals) - Translate Your Input**
   While typing a message in the chat input box, press `=` to instantly translate your typed text into your designated "Friend's Language."
 
-### ⚙️ Settings Menu Overview
+### Settings Menu Overview
 
 Press `_` in-game to access the configuration panel:
 
@@ -43,7 +43,7 @@ Press `_` in-game to access the configuration panel:
 * **Adaptive text color:** Toggle the real-time contrast-aware text color engine.
 * **Auto-translate new messages:** When enabled, any new message popping up in the chat log will be automatically translated to your language. (Disabled by default).
 
-### 📄 Additional Licensing
+### Additional Licensing
 
 This script is based on the work of N1CNmod.
 
