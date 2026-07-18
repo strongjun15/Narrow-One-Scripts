@@ -35,10 +35,12 @@ Deepest gratitude and honor to [Wolfart](https://github.com/N1-wolfart)..! ğŸ™ğ
 
 Press `_` in-game to access the configuration panel:
 
-* **My language:** Set this to your native language. Incoming chat messages will be translated into this language.
-* **My friend's language:** Set this to the language you want your outgoing messages to be translated into.
-* **Adaptive text color:** Toggle the real-time contrast-aware text color engine.
-* **Auto-translate new messages:** When enabled, any new message popping up in the chat log will be automatically translated to your language. (Disabled by default).
+| Setting | Description |
+|---|---|
+| **My language** | Set this to your native language. Incoming chat messages will be translated into this language. |
+| **My friend's language** | Set this to the language you want your outgoing messages to be translated into. |
+| **Adaptive text color** | Toggle the real-time contrast-aware text color engine. |
+| **Auto-translate new messages** | When enabled, any new message popping up in the chat log will be automatically translated to your language. (Disabled by default). |
 
 ### Additional Licensing
 
