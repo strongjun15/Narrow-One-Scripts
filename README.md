@@ -27,13 +27,13 @@ Deepest gratitude and honor to [Wolfart](https://github.com/N1-wolfart)..! üôè
 
 | Shortcut | Action | Description |
 |---|---|---|
-| `_`  (Shift + `-`) | Open/Close Settings Menu | Opens the **Chat Translator** panel. Press again to close it. |
+| `_`  | Open/Close Settings Menu | Opens the **Chat Translator** panel. Press again to close it. |
 | `\` (When not typing) | Translate Chat Log | Press outside the chat input box to instantly translate all currently visible chat messages into your language. Press again to revert to the original messages. (Note : if you are unfamiliar with this shortcut key, don't you worry! `-` from v1.0 still works.) |
 | `\`   (When typing) | Translate Your Input | While typing a message in the chat input box, press this to instantly translate your typed text into your designated "Friend's Language." |
 
 ### Settings Menu Overview
 
-Press `_` or clikc 'CHAT TRANSLATION' to access the configuration panel:
+Press `_` or click 'CHAT TRANSLATION' to access the configuration panel:
 
 | Setting | Description |
 |---|---|
@@ -41,6 +41,15 @@ Press `_` or clikc 'CHAT TRANSLATION' to access the configuration panel:
 | **My friend's language** | Set this to the language you want your outgoing messages to be translated into. |
 | **Adaptive text color** | Toggle the real-time contrast-aware text color engine. |
 | **Auto-translate new messages** | When enabled, any new message popping up in the chat log will be automatically translated to your language. (Disabled by default). |
+
+### Changelog
+
+* **Chat Mod with Translation v1.0** :
+** The first version. Added adaptive text color and translation feature on original chat mod made by Wolfart.
+* **Chat Mod with Translation v1.1** :
+** Modified Settings Medu's UI  just like other Menu's (Settigns, Shop, Squad, etc) in Narrow One
+** Modified shortcut keys (You can know translate others' messages and the message you are typing with just one shortcut key `\`)
+** Fixed minor bugs related to Google Translator
 
 ### Additional Licensing
 
