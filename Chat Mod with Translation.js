@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Chat Mod with Translation
 // @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  Transparent chat styling, real-time contrast-aware text color, and chat/input translation. [-] translate chat log, [=] translate what you are typing, [_] open settings.
+// @version      1.1
+// @description  Transparent chat styling, real-time contrast-aware text color, and chat/input translation. [-] translate chat log, [=] translate what you are typing, [_] or the CHAT TRANSLATION menu button to open settings.
 // @author       Lumos (extended)
 // @match        *://narrow.one/*
 // @run-at       document-start
@@ -296,67 +296,107 @@ body.n1ct-fallback ${SEL_INPUT} {
   75% { content: '...'; } 100% { content: '...'; }
 }
 
-/* ---------- 설정 창 ---------- */
+/* ---------- 설정 창 (게임 네이티브 종이 패널 스타일) ----------
+   게임의 .dialog.wrinkledPaper / .dialogCurtain 클래스를 그대로 재사용하므로
+   종이 질감·배경색·테마(라이트/다크/스크립트 커스텀)는 게임이 알아서 처리함.
+   여기서는 게임에 없는 우리 전용 요소(언어 검색 드롭다운, 토글 등)만 최소로 스타일링. */
+
+/* 커튼(뒷배경)과 패널은 게임 클래스에 의존하되, 위치/전환만 우리가 지정 */
+#n1ct-curtain {
+  position: fixed; inset: 0; z-index: 99998;
+  /* .dialogCurtain 클래스가 배경/전환을 처리. 아래는 fallback */
+}
 #n1ct-menu {
-  position: fixed; top: 100px; left: 100px; width: 260px;
-  backdrop-filter: blur(15px);
-  background-color: rgba(255,255,255,.85);
-  border-radius: 18px; padding: 18px 20px;
-  color: #1c1c1e;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  font-size: 14px; z-index: 999999;
-  box-shadow: 0 12px 30px rgba(0,0,0,.2);
-  border: 1px solid rgba(0,0,0,.1);
-  user-select: none; display: none;
+  position: fixed; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px; max-width: calc(100% - 20px);
+  box-sizing: border-box; padding: 30px;
+  z-index: 99999;
+  /* 게임과 동일한 등장/퇴장 전환 (살짝 튕기는 이징) */
+  transition: transform .2s cubic-bezier(0.3,-0.8,0.7,1.8),
+              opacity .2s cubic-bezier(0.3,-0.8,0.7,1.8),
+              visibility .2s cubic-bezier(0.3,-0.8,0.7,1.8);
+  max-height: calc(100vh - 40px); overflow-y: auto;
 }
-#n1ct-menu .n1ct-head {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 17px; font-weight: 700; margin-bottom: 14px; cursor: grab;
+/* 닫힘 상태: 게임의 .hidden 과 같은 효과 (줄어들며 사라짐) */
+#n1ct-menu.n1ct-hidden {
+  transform: translate(-50%, -50%) scale(.6);
+  opacity: 0; visibility: hidden; pointer-events: none;
 }
-#n1ct-menu .n1ct-head.grabbing { cursor: grabbing; }
-#n1ct-menu label.n1ct-label {
-  display: block; font-size: 12px; font-weight: 700;
-  color: #6b6b70; text-transform: uppercase; letter-spacing: .4px; margin: 0 0 5px;
+#n1ct-curtain.n1ct-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+#n1ct-curtain {
+  transition: opacity .2s ease, visibility .2s ease;
 }
-#n1ct-menu .n1ct-field { position: relative; margin-bottom: 14px; }
+
+/* 제목: 게임 .dialogTitle.blueNight 를 그대로 씀 → 폰트/색/lowercase 자동 */
+#n1ct-menu .dialogTitle { margin: 0 0 20px; }
+
+/* 소제목: 게임 .settings-group-header 재사용. 본문 라벨: .settings-item-text 재사용 */
+#n1ct-menu .settings-group-header { margin: 18px 0 10px; }
+#n1ct-menu .settings-group-header:first-of-type { margin-top: 0; }
+
+/* 언어 필드 */
+#n1ct-menu .n1ct-field { position: relative; margin: 0 0 6px; }
 #n1ct-menu input.n1ct-search {
-  width: 100%; box-sizing: border-box; height: 36px;
-  padding: 0 10px; border-radius: 10px;
-  border: 1px solid #d1d1d6; background: #f7f7fa;
-  font-size: 14px; color: #1c1c1e; outline: none; user-select: text;
+  width: 100%; box-sizing: border-box; height: 34px;
+  padding: 0 10px; margin-top: 4px;
+  border: 2px solid currentColor; border-radius: 4px;
+  background: transparent; color: inherit;
+  font-family: sans-serif; font-size: 15px; outline: none; user-select: text;
+  opacity: .9;
 }
-#n1ct-menu input.n1ct-search:focus { border-color: #8e8e93; background: #fff; }
-#n1ct-menu .n1ct-current { margin-top: 5px; font-size: 12px; color: #3a3a3c; font-weight: 600; }
+#n1ct-menu input.n1ct-search:focus { opacity: 1; }
+#n1ct-menu .n1ct-current {
+  margin-top: 4px; font-family: sans-serif; font-size: 13px;
+  font-weight: 700; opacity: .75;
+}
+/* 검색 결과 드롭다운: 배경이 필요해서 게임 UI 배경색 변수를 빌려 씀
+   (--default-ui-bg-color 는 게임/스크립트가 정의하는 테마 배경색) */
 #n1ct-menu .n1ct-results {
-  position: absolute; left: 0; right: 0; top: 38px;
-  background: #fff; border: 1px solid #d1d1d6; border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,.15);
+  position: absolute; left: 0; right: 0; top: 100%;
+  margin-top: 2px;
+  background: var(--default-ui-bg-color, #fff);
+  color: var(--default-text-color, #000);
+  border: 2px solid currentColor; border-radius: 6px;
   max-height: 200px; overflow-y: auto; z-index: 5; display: none;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
 }
 #n1ct-menu .n1ct-results div {
-  padding: 7px 10px; cursor: pointer; font-size: 13px;
+  padding: 7px 10px; cursor: pointer; font-family: sans-serif; font-size: 14px;
   display: flex; justify-content: space-between; gap: 8px;
 }
-#n1ct-menu .n1ct-results div:hover { background: #ececf1; }
-#n1ct-menu .n1ct-results span.code { color: #8e8e93; font-size: 11px; }
+#n1ct-menu .n1ct-results div:hover { background: rgba(128,128,128,.2); }
+#n1ct-menu .n1ct-results span.code { opacity: .55; font-size: 12px; }
+
+/* 토글 행: 게임 .settings-item-text 로 라벨을 쓰고 체크박스만 배치 */
 #n1ct-menu .n1ct-toggle {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 7px 0; font-size: 13px; font-weight: 600;
+  padding: 8px 0; font-family: sans-serif; font-size: 16px;
 }
-#n1ct-menu .n1ct-toggle input { width: 16px; height: 16px; cursor: pointer; }
-#n1ct-menu .n1ct-row { display: flex; gap: 8px; margin-top: 6px; }
-#n1ct-menu button.n1ct-btn {
-  flex: 1; height: 32px; border-radius: 9px; cursor: pointer;
-  border: 1px solid #d1d1d6; background: #f0f0f5;
-  font-size: 12px; font-weight: 600; color: #1c1c1e; font-family: inherit;
+#n1ct-menu .n1ct-toggle input { width: 18px; height: 18px; cursor: pointer; accent-color: currentColor; }
+
+/* 단축키 안내 */
+#n1ct-menu .n1ct-keys {
+  margin-top: 6px; font-family: sans-serif; font-size: 13px;
+  line-height: 1.9; opacity: .7;
 }
-#n1ct-menu button.n1ct-btn:hover { background: #e5e5ea; }
-#n1ct-menu button.n1ct-btn.active { background: #146aa0; border-color: #146aa0; color: #fff; }
-#n1ct-menu hr { border: none; border-top: 1px solid rgba(0,0,0,.08); margin: 12px 0; }
-#n1ct-menu .n1ct-keys { font-size: 11px; color: #6b6b70; line-height: 1.7; }
 #n1ct-menu .n1ct-keys kbd {
-  background: #ececf1; border: 1px solid #d1d1d6; border-bottom-width: 2px;
-  border-radius: 5px; padding: 0 5px; font-family: inherit; font-weight: 700; color: #1c1c1e;
+  border: 1px solid currentColor; border-bottom-width: 2px;
+  border-radius: 4px; padding: 0 5px; font-family: sans-serif; font-weight: 700;
+}
+
+/* 하단 닫기 버튼 영역: 게임 .dialogButtonsContainer / .dialog-button 재사용 */
+#n1ct-menu .dialogButtonsContainer {
+  display: flex; justify-content: center; margin-top: 22px;
+}
+#n1ct-menu .dialog-button { cursor: pointer; }
+
+/* 왼쪽 메뉴에 넣는 CHAT TRANSLATION 버튼 아이콘 */
+#n1ct-menu-btn .buttonImage {
+  background-image: var(--n1ct-icon) !important;
+  background-size: 66% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
 }
 `;
         (document.head || document.documentElement).appendChild(style);
@@ -669,7 +709,7 @@ body.n1ct-fallback ${SEL_INPUT} {
     setInterval(watchChat, 1000);
 
     /* ============================================================
-     * 8. 입력 중인 내용 번역 ( '=' )
+     * 8. 입력 중인 내용 번역 ( '\' 키, 입력창에 포커스가 있을 때 )
      * ============================================================ */
     const chatInput = () => document.querySelector(SEL_INPUT) || document.querySelector('.chat-input');
 
@@ -687,7 +727,8 @@ body.n1ct-fallback ${SEL_INPUT} {
         if (busy) return;
         const input = chatInput();
         if (!input) return;
-        const src = (input.value || '').trim();
+        // 혹시 트리거 키('\')가 입력창에 들어갔다면 제거한 뒤 번역 (확실하게)
+        let src = (input.value || '').replace(/\\+$/, '').trim();
         if (!src) return;
         busy = true;
         showIndicator('Translating');
@@ -748,42 +789,66 @@ body.n1ct-fallback ${SEL_INPUT} {
         });
     }
 
+    let curtain = null;
+
+    // wrinkledPaper 워클릿이 요소마다 seed를 요구하므로 랜덤 seed 부여
+    const rndSeed = () => Math.floor(Math.random() * 99999) + 1;
+
     function createMenu() {
         if (menu) return menu;
+
+        // 뒷배경 커튼 (게임 .dialogCurtain 재사용 → 클릭 시 닫힘)
+        curtain = document.createElement('div');
+        curtain.id = 'n1ct-curtain';
+        curtain.className = 'dialogCurtain fullScreen n1ct-hidden';
+        curtain.addEventListener('click', () => closeMenu());
+        document.body.appendChild(curtain);
+
+        // 패널 본체 (게임 .dialog.wrinkledPaper 재사용 → 종이 질감·테마 자동)
         menu = document.createElement('div');
         menu.id = 'n1ct-menu';
-        // 수정됨: 이미지 삭제 및 제목 변경, 라벨 설정 부분 삭제
+        menu.className = 'dialog wrinkledPaper n1ct-hidden';
+        menu.style.setProperty('--wrinkled-paper-seed', rndSeed());
         menu.innerHTML = `
-      <div class="n1ct-head">
-        ✨ Chat Translator ✨
-      </div>
+      <h2 class="dialogTitle blueNight">Chat Translation</h2>
 
+      <h3 class="settings-group-header">My language</h3>
       <div class="n1ct-field" data-which="myLang">
-        <label class="n1ct-label">My language</label>
         <input class="n1ct-search" type="text" placeholder="Search language or country" spellcheck="false">
         <div class="n1ct-results"></div>
         <div class="n1ct-current"></div>
       </div>
 
+      <h3 class="settings-group-header">My friend's language</h3>
       <div class="n1ct-field" data-which="friendLang">
-        <label class="n1ct-label">My friend's language</label>
         <input class="n1ct-search" type="text" placeholder="Search language or country" spellcheck="false">
         <div class="n1ct-results"></div>
         <div class="n1ct-current"></div>
       </div>
 
-      <hr>
-      <div class="n1ct-toggle"><span>Adaptive text color</span><input type="checkbox" id="n1ct-adaptive"></div>
-      <div class="n1ct-toggle"><span>Auto-translate new messages</span><input type="checkbox" id="n1ct-auto"></div>
+      <h3 class="settings-group-header">Options</h3>
+      <div class="n1ct-toggle"><span class="settings-item-text">Adaptive text color</span><input type="checkbox" id="n1ct-adaptive"></div>
+      <div class="n1ct-toggle"><span class="settings-item-text">Auto-translate new messages</span><input type="checkbox" id="n1ct-auto"></div>
 
-      <hr>
+      <h3 class="settings-group-header">Shortcuts</h3>
       <div class="n1ct-keys">
-        <kbd>-</kbd> translate the chat log &rarr; my language (press again for originals)<br>
-        <kbd>=</kbd> translate what you are typing &rarr; friend's language<br>
+        <kbd>\\</kbd> translate:<br>
+        &nbsp;&nbsp;&bull; while typing &rarr; your message to friend's language<br>
+        &nbsp;&nbsp;&bull; otherwise &rarr; the chat log to your language (press again for originals)<br>
         <kbd>_</kbd> open or close this panel
+      </div>
+
+      <div class="dialogButtonsContainer">
+        <button class="dialog-button blueNight wrinkledPaper" id="n1ct-close">Close</button>
       </div>
     `;
         document.body.appendChild(menu);
+
+        // 닫기 버튼에도 종이 seed 부여
+        const closeBtn = menu.querySelector('#n1ct-close');
+        closeBtn.style.setProperty('--wrinkled-paper-seed', rndSeed());
+        closeBtn.addEventListener('click', () => closeMenu());
+
         menu.querySelectorAll('.n1ct-field').forEach(f => buildLangField(f, f.dataset.which));
 
         const adaptiveBox = menu.querySelector('#n1ct-adaptive');
@@ -801,34 +866,102 @@ body.n1ct-fallback ${SEL_INPUT} {
         autoBox.checked = cfg.autoTranslate;
         autoBox.addEventListener('change', () => { cfg.autoTranslate = autoBox.checked; saveCfg(); });
 
-        // 헤더로만 드래그 (검색창이 살아있도록)
-        const head = menu.querySelector('.n1ct-head');
-        let dragging = false, ox = 0, oy = 0;
-        head.addEventListener('mousedown', (e) => {
-            dragging = true; ox = e.clientX - menu.offsetLeft; oy = e.clientY - menu.offsetTop;
-            head.classList.add('grabbing'); e.preventDefault();
-        });
-        document.addEventListener('mouseup', () => { dragging = false; head.classList.remove('grabbing'); });
-        document.addEventListener('mousemove', (e) => {
-            if (!dragging) return;
-            menu.style.left = Math.max(0, Math.min(window.innerWidth - 60, e.clientX - ox)) + 'px';
-            menu.style.top = Math.max(0, Math.min(window.innerHeight - 40, e.clientY - oy)) + 'px';
-        });
         return menu;
+    }
+
+    function openMenu() {
+        const m = createMenu();
+        // 열 때마다 종이 seed를 새로 뽑아 게임처럼 매번 살짝 다른 질감
+        m.style.setProperty('--wrinkled-paper-seed', rndSeed());
+        // reflow 후 hidden 제거해야 전환 애니메이션이 재생됨
+        void m.offsetWidth;
+        curtain.classList.remove('n1ct-hidden');
+        m.classList.remove('n1ct-hidden');
+    }
+
+    function closeMenu() {
+        if (!menu) return;
+        menu.classList.add('n1ct-hidden');
+        if (curtain) curtain.classList.add('n1ct-hidden');
+        try { document.activeElement.blur(); } catch (e) { /* ignore */ }
     }
 
     function toggleMenu() {
         const m = createMenu();
-        const open = m.style.display === 'block';
-        m.style.display = open ? 'none' : 'block';
-        if (open) {
-            // 수정됨: 라벨 재설정 버튼 관련 로직 삭제
-            if (placing) {
-                setPlacing(false);
-            }
-            try { document.activeElement.blur(); } catch (e) { /* ignore */ }
-        }
+        const isOpen = !m.classList.contains('n1ct-hidden');
+        if (isOpen) closeMenu(); else openMenu();
     }
+
+    /* ============================================================
+     * 9.5 왼쪽 메뉴에 "CHAT TRANSLATION" 버튼 삽입
+     *   구조: .main-menu-top-left > .menu-buttons-container
+     *          └ .main-menu-button-container (메뉴마다 1개)
+     *              ├ button.wrinkledPaper.main-menu-button > div.buttonImage
+     *              └ div.main-menu-button-text.whiteBigText.blueNight
+     *   Full Screen 컨테이너 바로 다음에 우리 컨테이너를 삽입한다.
+     *   게임이 입장 시 상위 UI를 통째로 숨기므로 우리 버튼도 자동으로 같이 사라진다.
+     * ============================================================ */
+
+    // 게임 톤에 맞는 흑백 아이콘 (말풍선 + 번역 화살표), 외부 파일 없이 data-URI로 삽입.
+    // 게임 기본 아이콘들은 "검은색" SVG이고, 다크 모드에서 게임이 색 반전을 걸어 흰색으로 보이게 함.
+    // 따라서 우리 아이콘도 검은색(#000)으로 만들어야 게임 아이콘과 똑같이 테마에 맞춰 색이 바뀜.
+    const MENU_ICON = "data:image/svg+xml;utf8," + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" ' +
+        'stroke="#000000" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M14 20 h44 a8 8 0 0 1 8 8 v24 a8 8 0 0 1 -8 8 h-24 l-16 14 v-14 h-4 a8 8 0 0 1 -8 -8 v-24 a8 8 0 0 1 8 -8 z"/>' +
+        '<path d="M24 34 h24 M36 34 v18 M28 52 q8 -12 16 0"/>' +
+        '<path d="M62 60 h24 a6 6 0 0 1 6 6 v14 a6 6 0 0 1 -6 6 h-4 v10 l-12 -10 h-8 a6 6 0 0 1 -6 -6 v-14 a6 6 0 0 1 6 -6 z"/>' +
+        '<path d="M66 74 h16 M74 70 v2 M78 74 q-4 8 -10 10 M70 74 q4 8 10 10"/>' +
+        '</svg>'
+    );
+
+    const MENU_BTN_ID = 'n1ct-menu-btn';
+
+    function findFullScreenContainer() {
+        const conts = document.querySelectorAll('.main-menu-button-container');
+        for (const c of conts) {
+            const btn = c.querySelector('button.main-menu-button');
+            const aria = btn && (btn.getAttribute('aria-label') || '').toLowerCase();
+            if (aria === 'full screen') return c;
+        }
+        return null;
+    }
+
+    function injectMenuButton() {
+        if (document.getElementById(MENU_BTN_ID)) return true;   // 이미 있음
+        const fsCont = findFullScreenContainer();
+        if (!fsCont || !fsCont.parentElement) return false;      // 메뉴 아직 안 뜸
+
+        // Full Screen 컨테이너를 그대로 복제해서 아이콘/텍스트만 교체 → 게임과 100% 동일한 외형
+        const ours = fsCont.cloneNode(true);
+        ours.id = MENU_BTN_ID;
+        ours.style.setProperty('--n1ct-icon', 'url("' + MENU_ICON + '")');
+
+        const btn = ours.querySelector('button.main-menu-button');
+        if (btn) {
+            btn.setAttribute('aria-label', 'Chat Translation');
+            // 복제하면서 딸려온 인라인 배경 이미지를 지워 우리 CSS(--n1ct-icon)가 적용되게 함
+            const img = btn.querySelector('.buttonImage');
+            if (img) { img.style.backgroundImage = ''; img.style.backgroundSize = ''; }
+        }
+        const label = ours.querySelector('.main-menu-button-text');
+        if (label) label.textContent = 'Chat Translation';
+
+        // 클릭 → 설정창 토글 (게임의 원래 클릭 핸들러는 복제 과정에서 붙어오지 않으므로 안전)
+        ours.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMenu();
+        }, true);
+
+        fsCont.parentElement.insertBefore(ours, fsCont.nextSibling);
+        console.log(TAG, 'menu button injected');
+        return true;
+    }
+
+    // 게임이 메뉴를 다시 그리면 우리 버튼이 사라질 수 있으니 주기적으로 재확인해 재삽입.
+    // (버튼 자체가 살아있으면 아무것도 안 하므로 부담 없음)
+    setInterval(injectMenuButton, 1000);
 
     /* ============================================================
      * 10. 키 바인딩
@@ -840,22 +973,35 @@ body.n1ct-fallback ${SEL_INPUT} {
 
     window.addEventListener('keydown', (e) => {
         const el = document.activeElement;
-        if (menu && menu.contains(el)) return;
+
+        // 우리 패널이 열려 있을 때 ESC → 닫기 (게임 ESC 동작보다 먼저 가로챔)
+        if (e.key === 'Escape' && menu && !menu.classList.contains('n1ct-hidden')) {
+            e.preventDefault(); e.stopPropagation(); closeMenu(); return;
+        }
+        if (menu && menu.contains(el)) return;   // 우리 UI 내부 입력은 각자 처리
         if (e.ctrlKey || e.altKey || e.metaKey) return;
 
         const typing = isTyping(el);
         const inChat = typing && el.classList && el.classList.contains('chat-input');
 
-        if (e.key === '=' && !e.shiftKey) {                 // 입력 중인 내용 번역
-            if (inChat) { e.preventDefault(); e.stopPropagation(); translateInput(); }
+        // '\' : 통합 번역 키. 포커스 위치에 따라 자동 분기.
+        //   - 채팅 입력창에 포커스 O → 내가 쓰는 내용 → friend's language
+        //   - 포커스 X            → 올라온 채팅 → my language (다시 누르면 원문 복원)
+        if (e.key === '\\') {
+            e.preventDefault(); e.stopPropagation();   // '\' 글자가 입력창에 안 찍히게 막음
+            if (inChat) translateInput();
+            else if (!typing) translateChatLog();
             return;
         }
-        if (typing) return;                                  // '-' / '_' 는 입력창 밖에서만
 
-        if (e.key === '_' || (e.key === '-' && e.shiftKey)) { // 설정 창
+        if (typing) return;                            // 아래 키들은 입력창 밖에서만
+
+        // '_' (shift + '-') : 설정 창 (단축키 백업; 왼쪽 메뉴 버튼으로도 열림)
+        if (e.key === '_' || (e.key === '-' && e.shiftKey)) {
             e.preventDefault(); e.stopPropagation(); toggleMenu(); return;
         }
-        if (e.key === '-') {                                  // 채팅 로그 번역
+        // '-' : 채팅 로그 번역 (기존 사용자용 유지)
+        if (e.key === '-') {
             e.preventDefault(); e.stopPropagation(); translateChatLog(); return;
         }
     }, true);
@@ -868,8 +1014,14 @@ body.n1ct-fallback ${SEL_INPUT} {
         ensureIndicator();
         positionIndicator();
         watchChat();
+        injectMenuButton();   // 메뉴가 이미 떠 있으면 즉시 삽입, 아니면 setInterval이 처리
         console.log(TAG, 'ready | my=' + cfg.myLang + ' friend=' + cfg.friendLang + ' auto=' + cfg.autoTranslate);
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
     else boot();
 })();
+
+
+
+
+
