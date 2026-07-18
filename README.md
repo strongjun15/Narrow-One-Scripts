@@ -7,7 +7,7 @@ To run these scripts, Tampermonkey (Google Chrome extension) is needed :
 
 ## 💬 Chat Mod with Translation
 
-![Chat Mod with Translation](chat_translator.png)
+![Chat Mod with Translation](chatmod.png)
 
 Real-time translation and adaptive text color features considering the background to enhance your gameplay experience.
 
