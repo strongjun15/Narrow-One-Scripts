@@ -233,7 +233,7 @@ Shared with love for the Narrow.One community :)
   bottom: 70px !important;
   transform: none !important;
 }
-.chat-input { font-size: 10pt !important; padding: 0px !important; }
+.chat-input { font-size: 15pt !important; padding: 0px !important; }
 .chat-message-name { font-size: 12pt !important; }
 input::placeholder {
   font-family: Ubuntu !important;
