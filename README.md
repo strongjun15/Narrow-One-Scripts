@@ -1,7 +1,7 @@
 # Userscripts for Narrow One 🏹
 > This repository contains JS scripts developed by Lumos to make playing [Narrow One](https://narrow.one) more fun and convenient.
 
-To run these scripts, Tampermonkey (Google Chrome extension) is needed :
+To run these scripts, Tampermonkey or Violentmonkey (Google Chrome extensions to run JS) is needed :
 * have a look at this [guidline by N1CN](https://github.com/N1CNmod/narrowone-mod#how-to-run-the-scripts-step-by-step-guide)
 * or [youtube vedio made by 【/ℕ𝕏/】 𝕶𝖛𝖊𝖝](https://www.youtube.com/watch?v=Cq7HAGtWuQ0)
 
@@ -57,6 +57,7 @@ Press `_` or click 'CHAT TRANSLATION' to access the configuration panel:
 * **Chat Mod with Translation v1.1 :**
   * Modified Settings Medu's UI  just like other Menu's (Settigns, Shop, Squad, etc) in Narrow One
   * Modified shortcut keys (You can know translate others' messages and the message you are typing with just one shortcut key `\`)
+  * Added a dashboard icon (`@icon`) to the userscript metadata block for easier identification in Tampermonkey/Violentmonkey.
   * Fixed minor bugs
 
 ### Additional Licensing
