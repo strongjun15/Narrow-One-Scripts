@@ -46,6 +46,8 @@ Press `_` or click 'CHAT TRANSLATION' to access the configuration panel:
 | **My friend's language** | Set this to the language you want your outgoing messages to be translated into. |
 | **Adaptive text color** | Toggle the real-time contrast-aware text color engine. |
 | **Auto-translate new messages** | When enabled, any new message popping up in the chat log will be automatically translated to your language. (Disabled by default). |
+| **Translate player names** | When enabled, player names are translated along with their messages, not just the message text. (Disabled by default). |
+| **Show language when it changes** | When enabled, a small tag appears next to a translated message showing what language it was originally written in — but only when it's different from the last one shown, so short back-to-back messages in the same language don't get tagged individually. (Enabled by default). |
 
 ⚠️ Clicking the panel shows the frequently used languages, but searching reveals many more.
 
